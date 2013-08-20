@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>jQuery Youtube-like Ajax Loading Bar by Pete R. | The Pete Design</title>
+	<meta name="title" content="jQuery Youtube-like Ajax Loading Bar by Pete R. | The Pete Design" />
+	<meta name="description" content="Add an ajax loading bar like on Youtube to all your ajax links. Created by Pete R., Founder of BucketListly" />
+	<link rel="image_src" href="/images/loading_bar_image.png" />
+
+	<meta content="http://www.thepetedesign.com/demos/youtube_loadingbar_demo.html" property="og:url" />
+	<meta content="http://www.thepetedesign.com/images/loading_bar_image.png" property="og:image" />
+	
+	<meta name="author" content="Pete R.">
+	<link rel="canonical" href="http://www.thepetedesign.com/demos/youtube_loadingbar_demo.html" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Pacifico:400' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="jquery.loadingbar.js"></script>
+  <style>
+    html {
+      height: 100%;
+    }
+    body {
+      background: #fff;
+      padding: 0;
+      text-align: center;
+      font-family: 'open sans';
+      position: relative;
+      margin: 0;
+      height: 100%;
+    }
+    
+    .wrapper {
+    	height: auto !important;
+    	height: 100%;
+    	margin: 0 auto; 
+    	overflow: hidden;
+    }
+    
+    a {
+      text-decoration: none;
+    }
+    
+    
+    h1, h2 {
+      width: 100%;
+      float: left;
+    }
+    h1 {
+      margin-top: 100px;
+      color: #000;
+      margin-bottom: 5px;
+    }
+    h1 span {
+      font-size: 26px;
+      margin: 0 5px;
+      text-transform: capitalize;
+      background: #CC3126;
+      display: inline-block;
+      color: #FFF;
+      border-radius: 5px 5px;
+      -webkit-border-radius: 5px 5px;
+      -moz-border-radius: 5px 5px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.75);
+      padding: 3px 10px;
+    }
+    h2 {
+      color: #999;
+      font-weight: 100;
+      margin-top: 0;
+      margin-bottom: 10px;
+    }
+    
+    .pointer {
+      color: #9b59b6;
+      font-family: 'Pacifico', cursive;
+      font-size: 30px;
+      margin-top: 15px;
+    }
+    pre {
+      margin: 80px auto;
+    }
+    pre code {
+      padding: 35px;
+      border-radius: 5px;
+      font-size: 15px;
+      background: rgba(0,0,0,0.1);
+      border: rgba(0,0,0,0.05) 5px solid;
+      max-width: 500px;
+    }
+
+
+    .main {
+      float: left;
+      width: 100%;
+      margin: 0 auto;
+    }
+    
+    .main h1 {
+      padding:150px 50px;
+      float: left;
+      width: 100%;
+      font-size: 45px;
+      box-sizing: border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      font-weight: 100;
+      color: white;
+      margin: 0;
+    }
+   
+    .main h1.demo1 {
+      background: #1ABC9C;
+    }
+    
+    .reload, .btn{
+      display: inline-block;
+      border: 4px solid #A2261E;
+      border-radius: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      background: #CC3126;
+      display: inline-block;
+      line-height: 100%;
+      padding: 0.7em;
+      text-decoration: none;
+      color: #fff;
+      width: 100px;
+      line-height: 140%;
+      font-size: 17px;
+      font-family: open sans;
+      font-weight: bold;
+    }
+    .reload:hover{
+      background: #A2261E;
+    }
+    .btn {
+      width: 200px;
+      color: #555;
+      margin-left: 10px;
+      border: 4px solid #C0C0C0;
+      background: rgba(235, 232, 232, 0.75);
+    }
+    .btn:hover, .btn:hover {
+      background: #fff;
+    }
+    .btns {
+      width: 410px;
+      margin: 50px auto;
+    }
+    .credit {
+      text-align: center;
+      color: #999;
+      padding: 10px;
+      margin: 0 0 40px 0;
+      background: rgba(255,255,255,0.25);
+      float: left;
+      width: 100%;
+    }
+    .credit a {
+      color: #555;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    
+    .frame {
+      width: 900px;
+      margin: 45px auto;
+    }
+    .frame img{
+      width: 200px;
+      margin: 2px;
+    }
+	</style>
+	<link rel="stylesheet" type="text/css" href="loadingbar.css" />
+	<script>
+	  $(document).ready(function(){
+      $("#clickme").loadingbar({
+        done: function(data) {
+          $.each( data.shots, function( i, item ) {
+            $( "<img/>" ).attr( "src", item.image_teaser_url ).prependTo( $("#frame") );
+            if ( i === 11 ) {
+              return false;
+            }
+          });
+        }
+      });
+		});
+		
+	</script>
+</head>
+<body>
+  <div class="wrapper">
+    <h1>You<span>tube</span>-like Ajax Loading Bar</h1>
+    <h2>Add an ajax loading bar like on Youtube to all your ajax links.</h2>
+    <p class="credit">Created by <a href="http://www.thepetedesign.com">Pete R.</a>, Founder of <a href="http://www.bucketlistly.com" target="_blank">BucketListly</a></p>
+    
+	  <div class="main">
+	    <div class="btns">
+	      <a href="http://api.dribbble.com/players/jackietrananh/shots?callback=?" data-datatype="json" data-type="GET" data-target="#frame" class="reload" id="clickme"><i class="customicon-download-alt"></i> Click Me</a>
+	      <a class="reload btn" href="https://github.com/peachananr/loading-bar">Download on Github</a>
+	    </div>
+      <div class="frame" id="frame">
+      </div>
+    </div>
+    <a href="https://github.com/peachananr/loading-bar"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
+  </div>
+</body>
+</html>
