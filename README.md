@@ -33,7 +33,6 @@ For HTML markups, all you need is a link and a container to show the result:
   
 ````html
 <a href="<<URL>>" class="ajax-call">..</a>
-</div>
 <div id="loadingbar-frame"></div>
 ````
 Make sure you change the "<<URL>>" into the URL you want the script to load. 
