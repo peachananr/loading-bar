@@ -23,8 +23,8 @@ $(".ajax-call").loadingbar({
 	headers: {},
 	statusCode: {},
 	success: function(data, text, xhr) {},
-	dataType: "html"
-  done: function(data) {}
+	dataType: "html",
+	done: function(data) {}
 });
 ````
 Note: For options listed under Default Ajax Parameters, simply refer to [jQuery.ajax doc](http://api.jquery.com/jQuery.ajax/) for more info. 
@@ -43,7 +43,8 @@ Make sure you change the "<<URL>>" into the URL you want the script to load.
 Sometime you may want each links to have its own ajax command, for example one for `POST` and another for `GET`. With this script you can do this by simply following markup rules as shown in the example below:
 
 ````html
-<a href="http://api.dribbble.com/players/jackietrananh/shots?callback=?" data-datatype="json" data-type="GET" data-target="#frame">Click Me</a>
+<a href="http://api.dribbble.com/players/jackietrananh/shots?callback=?" 
+data-datatype="json" data-type="GET" data-target="#frame">Click Me</a>
 ````
 This example shows how I was able to call the Dribbble's API with a data markup. Simply assign `data-target` with a selector to define the target container, `data-type` to define the type of ajax call you want and `data-datatype` to define the type you want to receive. 
 
