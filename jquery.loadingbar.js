@@ -11,37 +11,37 @@
  *
  * ========================================================== */
 
-!function($){
+;(function($, window, document, undefined){
   
   var defaults = {
-		replaceURL: false,
-		target: "#loadingbar-frame",
-		direction: "right",
-		
-		/* Deafult Ajax Parameters  */
-		async: true,
-		complete: function(xhr, text) {},
-		cache: true,
-		error: function(xhr, text, e) {},
-		global: true,
-		headers: {},
-		statusCode: {},
-		success: function(data, text, xhr) {},
-		dataType: "html"
-	};
-	
-	$.fx.step.textShadowBlur = function(fx) {
+    replaceURL: false,
+    target: "#loadingbar-frame",
+    direction: "right",
+    
+    /* Deafult Ajax Parameters  */
+    async: true,
+    complete: function(xhr, text) {},
+    cache: true,
+    error: function(xhr, text, e) {},
+    global: true,
+    headers: {},
+    statusCode: {},
+    success: function(data, text, xhr) {},
+    dataType: "html"
+  };
+  
+  $.fx.step.textShadowBlur = function(fx) {
     $(fx.elem).prop('textShadowBlur', fx.now).css({textShadow: '0 0 ' + Math.floor(fx.now) + 'px black'});
   };
   
-	
+  
   $.fn.loadingbar = function(options){
     var settings = $.extend({}, defaults, options),
         el = $(this),
         href = el.attr("href"),
         target = (el.data("target")) ? el.data("target") : settings.target,
         type = (el.data("type")) ? el.data("type") : settings.type,
-        datatype = (el.data("datatype")) ? el.data("datatype") : settings.dataType
+        datatype = (el.data("datatype")) ? el.data("datatype") : settings.dataType;
       
     return this.each(function(){
       el.click(function (){
@@ -59,7 +59,7 @@
           dataType : datatype,
           beforeSend: function() {
             if ($("#loadingbar").length === 0) {
-              $("body").append("<div id='loadingbar'></div>")
+              $("body").append("<div id='loadingbar'></div>");
               $("#loadingbar").addClass("waiting").append($("<dt/><dd/>"));
               
               switch (settings.direction) { 
@@ -89,7 +89,7 @@
             }
           }
         }).always(function() {
-          switch (settings.direction) { 
+          switch (settings.direction) {
             case 'right':
                $("#loadingbar").width("101%").delay(200).fadeOut(400, function() {
                    $(this).remove();
@@ -113,21 +113,19 @@
           }
           
         }).done(function(data) {
-          if ( history.replaceState && settings.replaceURL == true ) history.pushState( {}, document.title, href );
+          if ( history.replaceState && settings.replaceURL === true ) history.pushState( {}, document.title, href );
           if (settings.done) {
-            settings.done(data, target)
+            settings.done(data, target);
           } else {
-            $(target).html(data)
+            $(target).html(data);
           }
           
         });
-        return false
+        return false;
       });
       
       
     });
-  }
+  };
   
-}(window.jQuery);
-
-
+})(jQuery, window, document);
