@@ -46,6 +46,17 @@
     return this.each(function(){
       el.click(function (){
         $.ajax({
+          xhr: function() {
+            var xhr = jQuery.ajaxSettings.xhr();
+
+            if ("onprogress" in xhr && xhr instanceof window.XMLHttpRequest) {
+              xhr.addEventListener('progress', this.progress, false);
+              if (xhr.upload) {
+                xhr.upload.addEventListener('progress', this.progress, false);
+              }
+            }
+            return xhr;
+          },
           type: type,
           url: href,
           async: settings.async,
@@ -57,35 +68,66 @@
           statusCode: settings.statusCode,
           success: settings.success,
           dataType : datatype,
-          beforeSend: function() {
+          beforeSend: function(jxhr, options) {
             if ($("#loadingbar").length === 0) {
-              $("body").append("<div id='loadingbar'></div>")
+              $("body").append("<div id='loadingbar'></div>");
               $("#loadingbar").addClass("waiting").append($("<dt/><dd/>"));
               
-              switch (settings.direction) { 
+              if(options.dataTypes[0] == 'script') {
+                // only "fake it" if using jsonp
+                switch (settings.direction) { 
+                  case 'right':
+                     $("#loadingbar").width((50 + Math.random() * 30) + "%");
+                    break;
+                  case 'left':
+                     $("#loadingbar").addClass("left").animate({
+                       right: 0,
+                       left: 100 - (50 + Math.random() * 30) + "%"
+                     }, 200);
+                    break;
+                  case 'down':
+                     $("#loadingbar").addClass("down").animate({
+                       left: 0,
+                       height: (50 + Math.random() * 30) + "%"
+                     }, 200);
+                    break;
+                  case 'up':
+                     $("#loadingbar").addClass("up").animate({
+                       left: 0,
+                       top: 100 - (50 + Math.random() * 30) + "%"
+                     }, 200);
+                    break;
+                }
+              }
+            }
+          },
+          progress: function(evt) {
+            if (evt.lengthComputable) {
+              var percentComplete = Math.round(evt.loaded / evt.total * 100);
+
+              switch (settings.direction) {
                 case 'right':
-                   $("#loadingbar").width((50 + Math.random() * 30) + "%");
+                  $("#loadingbar").width(percentComplete + "%");
                   break;
                 case 'left':
-                   $("#loadingbar").addClass("left").animate({
-                     right: 0,
-                     left: 100 - (50 + Math.random() * 30) + "%"
-                   }, 200);
+                  $("#loadingbar").addClass("left").animate({
+                    right: 0,
+                    left: (100 - percentComplete) + "%"
+                  }, 200);
                   break;
                 case 'down':
-                   $("#loadingbar").addClass("down").animate({
-                     left: 0,
-                     height: (50 + Math.random() * 30) + "%"
-                   }, 200);
+                  $("#loadingbar").addClass("down").animate({
+                    left: 0,
+                    height: percentComplete + "%"
+                  }, 200);
                   break;
                 case 'up':
-                   $("#loadingbar").addClass("up").animate({
-                     left: 0,
-                     top: 100 - (50 + Math.random() * 30) + "%"
-                   }, 200);
+                  $("#loadingbar").addClass("up").animate({
+                    left: 0,
+                    top: (100 - percentComplete) + "%"
+                  }, 200);
                   break;
               }
-             
             }
           }
         }).always(function() {
