@@ -36,14 +36,15 @@
   
 	
   $.fn.loadingbar = function(options){
-    var settings = $.extend({}, defaults, options),
-        el = $(this),
+    var settings = $.extend({}, defaults, options);
+      
+    return this.each(function(index, element){
+      var el = $(element),
         href = el.attr("href"),
         target = (el.data("target")) ? el.data("target") : settings.target,
         type = (el.data("type")) ? el.data("type") : settings.type,
-        datatype = (el.data("datatype")) ? el.data("datatype") : settings.dataType
-      
-    return this.each(function(){
+        datatype = (el.data("datatype")) ? el.data("datatype") : settings.dataType;
+
       el.click(function (){
         $.ajax({
           type: type,
